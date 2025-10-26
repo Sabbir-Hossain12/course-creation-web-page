@@ -11,7 +11,7 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,41 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // Course Fields
+            'title'                 => ['required', 'string', 'max:255'],
+            'description'           => ['required', 'string'],
+            'category'              => ['required', 'string', 'max:255'],
+            'feature_video'         => ['required', 'file', 'mimetypes:video/mp4,video/avi,video/mpeg,video/quicktime', 'max:51200'], // 50MB limit
+            'price'                 => ['required', 'numeric', 'min:0'],
+
+            // SEO Fields
+            'meta_title'            => ['nullable', 'string', 'max:255'],
+            'meta_description'      => ['nullable', 'string'],
+            'meta_keywords'         => ['nullable', 'string'],
+            'meta_image'            => ['nullable', 'image', 'max:2048'],
+            'google_schema'         => ['nullable', 'json'],
+
+            // Nested Modules
+            'modules'               => ['required', 'array', 'min:1'],
+            'modules.*.title'       => ['required', 'string', 'max:255'],
+            'modules.*.description' => ['required', 'string'],
+            'modules.*.duration'    => ['nullable', 'string', 'max:50'],
+
+            // Nested Contents
+            'modules.*.contents'             => ['required', 'array', 'min:1'],
+            'modules.*.contents.*.title'     => ['required', 'string', 'max:255'],
+            'modules.*.contents.*.type'      => ['required', 'string'],
+            'modules.*.contents.*.video_url' => ['nullable', 'string', 'max:255'],
+            'modules.*.contents.*.duration'  => ['nullable', 'string', 'max:50'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'modules.required'              => 'You must add at least one module.',
+            'modules.*.contents.required'   => 'Each module must contain at least one content item.',
+            'feature_video.mimetypes'       => 'The feature video must be a valid video file (MP4, AVI, MPEG, MOV).',
         ];
     }
 }
