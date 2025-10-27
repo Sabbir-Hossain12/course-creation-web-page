@@ -49,7 +49,7 @@ class CourseController extends Controller
             // Optionally log for debugging
             \Log::error('Course store error: ' . $e->getMessage());
 
-            return redirect()->back()->with('error',$e->getMessage());
+            return redirect()->back()->with('error', 'Something went wrong!');
         }
     }
 
