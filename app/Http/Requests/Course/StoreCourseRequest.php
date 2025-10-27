@@ -26,7 +26,7 @@ class StoreCourseRequest extends FormRequest
             'title'                 => ['required', 'string', 'max:255'],
             'description'           => ['required', 'string'],
             'category'              => ['required', 'string', 'max:255'],
-            'feature_video'         => ['required', 'file', 'mimetypes:video/mp4,video/avi,video/mpeg,video/quicktime', 'max:51200'], // 50MB limit
+            'feature_video'         => ['required', 'file', 'max:51200','mimes:mp4,avi,mpeg,mov'],
             'price'                 => ['required', 'numeric', 'min:0'],
 
             // SEO Fields

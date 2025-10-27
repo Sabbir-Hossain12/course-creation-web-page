@@ -13,7 +13,7 @@ class CourseService
     {
         return DB::transaction(function () use ($data) {
 
-            // ✅ Upload files
+            // Upload files
             if (isset($data['feature_video']) && $data['feature_video'] instanceof UploadedFile) {
                 $data['feature_video'] = $data['feature_video']->store('courses/videos', 'public');
             }
@@ -22,12 +22,12 @@ class CourseService
                 $data['meta_image'] = $data['meta_image']->store('courses/images', 'public');
             }
 
-            // ✅ Create course
+            //Create course
             $course = Course::create([
                 'title'            => $data['title'],
                 'description'      => $data['description'],
                 'category'         => $data['category'],
-                'feature_video'    => $data['feature_video'],
+                'feature_video'    => $data['feature_video'] ?? 'null',
                 'price'            => $data['price'],
                 'meta_title'       => $data['meta_title'] ?? null,
                 'meta_description' => $data['meta_description'] ?? null,
@@ -36,7 +36,7 @@ class CourseService
                 'google_schema'    => $data['google_schema'] ?? null,
             ]);
 
-            // ✅ Create modules and contents
+            //Create modules and contents
             foreach ($data['modules'] as $moduleData) {
                 $module = $course->modules()->create([
                     'title'       => $moduleData['title'],

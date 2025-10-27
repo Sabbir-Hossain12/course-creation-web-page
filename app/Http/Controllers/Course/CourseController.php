@@ -7,6 +7,7 @@ use App\Http\Requests\Course\StoreCourseRequest;
 use App\Models\Course;
 use App\Services\CourseService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -36,25 +37,19 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourseRequest $request): JsonResponse
+    public function store(StoreCourseRequest $request)
     {
+//        dd($request->all());
         try {
             $course = $this->courseService->storeCourse($request->validated());
 
-            return response()->json([
-                'status'  => true,
-                'message' => 'Course created successfully',
-                'data'    => $course,
-            ], 201);
-
+            return redirect()->back()->with('success','Course Created Successfully');
+            
         } catch (\Exception $e) {
             // Optionally log for debugging
             \Log::error('Course store error: ' . $e->getMessage());
 
-            return response()->json([
-                'status'  => false,
-                'message' => 'Something went wrong while creating course',
-            ], 500);
+            return redirect()->back()->with('error',$e->getMessage());
         }
     }
 
