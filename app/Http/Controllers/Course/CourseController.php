@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Course\StoreCourseRequest;
 use App\Models\Course;
 use App\Services\CourseService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -39,15 +38,14 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-//        dd($request->all());
         try {
             $course = $this->courseService->storeCourse($request->validated());
 
             return redirect()->back()->with('success','Course Created Successfully');
-            
+
         } catch (\Exception $e) {
-            // Optionally log for debugging
-            \Log::error('Course store error: ' . $e->getMessage());
+            //log for debugging
+            Log::error('Course store error: ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'Something went wrong!');
         }

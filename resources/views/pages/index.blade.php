@@ -3,8 +3,6 @@
 @push('backendCss')
     <link href="{{asset('backend')}}/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css"
           rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="{{asset('backend/assets/js/select2/select2.min.css')}}">
 @endpush
 
 @section('contents')
@@ -72,7 +70,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -98,7 +96,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -121,7 +119,7 @@
                                     + Add Module
                                 </button>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -166,7 +164,7 @@
                 @enderror
             </div>
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Module Duration</label>
               <input type="text" name="modules[${moduleIndex}][duration]" class="form-control">
@@ -176,9 +174,9 @@
                 @enderror
                 </div>
                 </div>
-    
+
                 <div class="contents-wrapper"></div>
-    
+
                 <button type="button" class="btn btn-sm btn-outline-secondary add-content">+ Add Content</button>
               </div>
             </div>`;
@@ -233,13 +231,6 @@
             $(document).on('click', '.remove-content', function () {
                 $(this).closest('.border').remove();
             });
-
-            //  Submit handler (for preview/debug)
-            // $('#createCourse').submit(function (e) {
-            //     e.preventDefault();
-            //     console.log($(this).serializeArray());
-            //     alert('Course data ready to send to backend!');
-            // });
         });
     </script>
 @endpush
